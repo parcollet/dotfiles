@@ -23,6 +23,7 @@
 ##################### My aliases  ######################
 
 	# General
+alias clang++='clang++ -Wl,-w'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -50,8 +51,9 @@ alias sshx="TERM=xterm ssh -Y"
 alias sshnokey="ssh -X -o PubkeyAuthentication=no"
 
 	# vim
-alias vimsrc="vim **/*.c(N) **/*.h(N) **/*.cpp(N) **/*.hpp(N) **/*.hxx(N)"
-alias vimtex='vim --servername $(basename *.tex.latexmain .tex.latexmain) *.tex content/*.tex(N) settings/*.tex(N)'
+alias vim="mvim -v"
+alias vimsrc="mvim -v **/*.c(N) **/*.h(N) **/*.cpp(N) **/*.hpp(N) **/*.hxx(N)"
+alias vimtex='mvim --servername SYNCTEX *.tex(N) content/*.tex(N) settings/*.tex(N)'
 
 	# apt
 alias apts="apt-cache search"
@@ -73,7 +75,7 @@ tmuxdev () {
   tmux neww -n Coding -c ~/Dropbox/Coding
   tmux neww -n System -c ~/Dropbox
   tmux neww -n System -c ~/Dropbox
-  tmux neww -n Jupyter -c ~/Dropbox/Coding/Notebooks /home/nwentzel/opt/triqs/bin/ipytriqs_notebook
+  tmux neww -n Jupyter -c ~/Dropbox/Coding/Notebooks /Users/nwentzel/opt/triqs/bin/ipytriqs_notebook
   tmux neww -n Latex -c ~/Dropbox/Latex
   tmux neww -n Latex -c ~/Dropbox/Latex
   tmux selectw -t 1
@@ -83,7 +85,7 @@ tmuxdev () {
 
         # Develop
 alias make="make -j 8"
-alias triqs++='g++-7 -std=c++17 -ltriqs -lmpi -lmpi_cxx -lpython2.7 -lblas -llapack -lgtest -lhdf5 -Wno-register' 
+alias triqs++='clang++ -std=c++17 -ltriqs -lmpi -lpython2.7 -lblas -llapack -lgtest -lhdf5 -Wno-register -DHAS_OPTIONAL_HEADER' 
 alias activate='source ~/opt/python/bin/activate'
 alias ctags='ctags -R --options=$HOME/.ctagsrc'
 alias valmem='valgrind --leak-check=full --max-stackframe=4000000'
