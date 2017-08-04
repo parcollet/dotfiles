@@ -25,6 +25,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'vim-scripts/AnsiEsc.vim'
+Plugin 'jceb/vim-editqf'
+
 
 call vundle#end()
 
@@ -32,8 +34,7 @@ call vundle#end()
 
 syntax on			" Syntax highlighting on
 filetype plugin indent on	" Indenting globally on
-set shiftwidth=2		" Set indent shift
-set backspace=2			" Make backspace work normally
+set shiftwidth=4		" Set indent shift
 
 set wildmenu			" Always use auto-complete menu
 
@@ -43,51 +44,42 @@ set laststatus=2		" Always display status bar
 set hidden			" Can hide changed buffers!
 set number 			" Show line numbers 
 
-" Settings for solarized color scheme
-set t_Co=256			
-set background=dark
-colorscheme solarized 
-
-" fix replace color highlight
-:hi incsearch term=standout cterm=standout ctermfg=9 ctermbg=7 gui=reverse
-
 "-------------------------------------- CUSTOM COMMANDS ------------------------------------------
 
-" Simple small comment line
-:command! CommLineSmall 	:normal 80i-<Esc>,ciA<cr>
-"  Small comment line with text
-:command! CommTLineSmall	:normal 80i-<Esc>,ci40hi 
-" Simple comment line
-:command! CommLine 	:normal 70i=<Esc>,ciA<cr>
-" Comment line with text
-:command! CommTLine 	:normal 70i=<Esc>,ci35hi   
-" Start Doxygen multiline comment
-:command! DoxComm	:normal i/**<cr><cr>/<Esc>ka<TAB>	
-" Build file and open quickfix window 
-:command! Mdb		:make | cwindow 15
 " Insert templates
-:command! Tcpp		:r ~/.vim/templates/templ.cpp
-:command! Tmain		:r ~/.vim/templates/main.cpp
-:command! Tclass	:r ~/.vim/templates/class.cpp
-:command! Th		:r ~/.vim/templates/templ.h
-:command! Ttex		:r ~/.vim/templates/templ.tex
+":command! Tcpp		:r ~/.vim/templates/templ.cpp
+":command! Tmain		:r ~/.vim/templates/main.cpp
+":command! Tclass	:r ~/.vim/templates/class.cpp
+":command! Th		:r ~/.vim/templates/templ.h
+":command! Ttex		:r ~/.vim/templates/templ.tex
 
 "Command Make will call make and then open quickfix window
-autocmd BufReadPost quickfix AnsiEsc
-set makeprg=$HOME/.vim/mymake.sh
-:command! -nargs=* Make :make -j 8 <args> | cwindow 15
+:command! -nargs=* Make :make -j 8 <args> |cwindow
+:au BufReadPost quickfix AnsiEsc
+set makeprg=~/.vim/make.bash
+
+function! QfRmTriqs()
+  let qflist = getqflist()
+  for i in qflist
+     let i.text = substitute(i.text, "triqs::",  "", "g")
+  endfor
+  call setqflist(qflist)
+endfunction
+
+":command! RmTriqs call QfRmTriqs()
+"au QuickfixCmdPost make call QfRmTriqs() |AnsiEsc| cn
 
 "-------------------------------------- KEY MAPPINGS ------------------------------------------
 
 " rebind leader key and escape 
 let mapleader = ","
-inoremap ;; <Esc>
-vnoremap ;; <Esc>
+"inoremap ;; <Esc>
+"vnoremap ;; <Esc>
 
-" easy copy/paste to clipboard
-vnoremap <leader><leader>y 	"+y
-nnoremap <leader><leader>p 	"+p
-vnoremap <leader><leader>p 	"+p
+" easy copy/pase to clipboard
+vnoremap <leader><leader>y 	"*y
+nnoremap <leader><leader>p 	"*p
+vnoremap <leader><leader>p 	"*p
 
 " simple scrolling through file
 nnoremap ;j 	<C-D>
@@ -107,19 +99,18 @@ nmap <Leader>chl 	:CommLineSmall<cr>
 nmap <Leader>ctl 	:CommTLineSmall<cr>
 nmap <Leader>Chl 	:CommLine<cr>
 nmap <Leader>Ctl 	:CommTLine<cr>
-nmap <Leader>dc 	:DoxComm<cr>
+"nmap <Leader>dc 	:DoxComm<cr>
 
 " automatically add closing brackets
-inoremap {      {}<Left>
-inoremap {<cr>  {<cr>}<Esc>O
-inoremap {{     {
-inoremap {}     {}
+"inoremap {      {}<Left>
+"inoremap {<cr>  {<cr>}<Esc>O
+"inoremap {{     {
+"inoremap {}     {}
 
 "Just press F5 to make your program:
-map <F5> :Make run<cr><cr><cr>
-autocmd Syntax c,cpp map 'll :Make -C build<cr><cr><cr>
-
-";n for next error
+map <F5> :Make all<cr><cr><cr>
+map 'll :Make -C ~/B/triqs<cr><cr><cr>
+"leader n for next error
 nnoremap ;n	:cn<cr> 
 nnoremap ;p	:cp<cr> 
 
@@ -138,30 +129,32 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 "-------------------------------------- FILE TYPE AUTOCOMMANDS ------------------------------------------
 
-au BufNewFile,BufRead	*.plt	set filetype=gnuplot		" set plt files to gnuplot type
-au BufNewFile,BufRead	*MAKE*	set filetype=make		" set files with MAKE in name to make type
 
 "-------------------------------------- FOLDING  ------------------------------------------
 
-autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax 	" Enable Syntax folding
-autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR			" Start unfolded
+"autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax 	" Enable Syntax folding
+"autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR			" Start unfolded
 
 "-------------------------------------- CPP SPECIFIC STUFF ------------------------------------------
 
 " --- Config for clang-format plugin
-autocmd Syntax c,cpp nnoremap == :ClangFormat<cr>
-autocmd Syntax c,cpp vnoremap == :ClangFormat<cr>
+nnoremap == :ClangFormat<cr>
+vnoremap == :ClangFormat<cr>
 " Specify command in shell
-let g:clang_format#command = 'clang-format'
+let g:clang_format#command = '/opt/llvm/bin/clang-format'
 " Detect and apply style-file .clang-format or _clang-format
 let g:clang_format#detect_style_file = 1
 
+au BufNewFile,BufRead *.?pp so ~/.vim/cpp_abb.vim
+au BufNewFile,BufRead *.m?pp so ~/.vim/cpp_abb.vim
+au BufNewFile,BufRead *.m?pp set filetype=cpp
+au BufNewFile,BufRead *.?pp set syntax=cpp11
 
+" match pairs of < and >
+autocmd FileType cpp set mps+=<:>
 " set up file switch for fswitch plugin
-"au! BufEnter *.cpp let b:fswitchdst = 'h' | let b:fswitchlocs = '../include'
-"au! BufEnter *.h let b:fswitchdst = 'cpp' | let b:fswitchlocs = '../src'
-au! BufEnter *.cpp let b:fswitchdst = 'hpp'
-au! BufEnter *.hpp let b:fswitchdst = 'cpp'
+au! BufEnter *.cpp let b:fswitchdst = 'hpp' "| let b:fswitchlocs = '../include'
+au! BufEnter *.h let b:fswitchdst = 'cpp' "| let b:fswitchlocs = '../src'
 
 " --- FSwitch bindings
 " Switch to the file and load it into the current window >
@@ -183,68 +176,37 @@ nmap <silent> <Leader>oj :FSBelow<cr>
 "Switch to the file and load it into a new window split below >
 nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
-" Translate Mathematica cpp expressions to correct expression
-function! Math2Cpp()
-   :s/\\\[\(\w\{-}\)\]/\1/ge
-   :s/Beta/BETA/ge
-   :s/CapitalLambda/Lam/ge
-   :s/\(\d\+\)\./\1/ge
-   :s/\(\d\+\)/\1.0/ge
-   :s/Power/pow/ge
-   :s/Pi/PI/ge
-   :s/ArcTanh/atanh/ge
-   :s/ArcTan/atan/ge
-   :s/HeavisideThetan/Theta/ge
-   :s/Log/log/ge
-   :s/Abs/abs/ge
-endfunction
+let g:tex_flavor='latex'
+let g:Tex_ViewRule_pdf = 'Skim' 
 
-"-------------------------------------- LATEX SPECIFIC STUFF ------------------------------------------
-"
-let g:LatexBox_viewer = 'zathura'
-let g:LatexBox_latexmk_options = "-pdflatex='pdflatex -synctex=1 \%O \%S'"
-let g:LatexBox_ignore_warnings = ['Underfull',
-				\ 'Overfull',
-				\ 'deprecated',
-				\ 'fancyhdr',
-				\ 'titlesec',
-				\ 'hyperref',
-				\ 'minitoc',
-				\ 'specifier changed to',
-				\ 'Package amsmath Warning']
+set shellslash
+set grepprg=grep\ -nH\ $*
+set winaltkeys=no
+set nu
+set tw=0
+set sw=1
+set fo-=t "disable autowrap
+set tabstop=8
+set enc=utf-8
+set autochdir
 
-nnoremap <F9>   :exec "!zathura ".LatexBox_GetOutputFile() line('.')  col('.') "%"<cr><cr>
+"let g:clang_format_path='/usr/local/opt/llvm/bin/clang-format' 
+"map <C-K> :pyf /Users/parcolle/clang34/clang-format.py<CR>
+"imap <C-K> <ESC>:pyf /Users/parcolle/clang34/clang-format.py<CR>i
+"map <C-K> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
+"imap <C-K> <ESC>:pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>i
 
-function! SyncTexForward()
-   let servername = substitute( LatexBox_GetOutputFile(), '.*/\(.\{-}\)\.pdf', '\U\1', 'g' )
-   let execstr = "silent !zathura -x 'gvim -v --servername ". servername ." --remote +\\\%{line} \\\%{input}' --synctex-forward ".line(".").":".col('.').":% ". LatexBox_GetOutputFile() ." 2> /dev/null &"
-   exec execstr
-   :redraw!
-endfunction
 
-nmap <Leader>f :call SyncTexForward()<CR>
+" my commands
+command! CleanConstRef %s/const\s*\([^\&]\+\)\s*&\s*\(\<\w*\>\)\s*/\1 const \&\2/gc
+command! ReplaceTypeByUsing %s/typedef\s*\(.*\)\s*\(\<\w*\>\)\s*;/using \2=\1;/gc
+command! ReplDecay %s/typename std::remove_const<typename std::remove_reference<\(.*\)>::type>::type/std14::decay_t<\1>/gc
+command! ReplDR %s/auto \(.*\)\_s*DECL_AND_RETURN(\(.*\));/decltype(auto) \1 { return \2;}/gc
+command! ReplRETURN %s/RETURN(\(.*\));\s*$/{ return \1;}/gc 
 
-:command! Myspell :setlocal spell spelllang=en_us <bar> :syntax spell toplevel
+command! Repl14Type %s/typename std::remove_reference<\(.*\)>::type/std14::remove_reference_t<\1>/ge | %s/typename std::result_of<\(.*\)>::type/std14::result_of_t<\1>/ge  | %s/typename std::remove_const<\(.*\)>::type/std14::remove_const_t<\1>/ge | %s/typename std::decay<\(.*\)>::type/std14::decay_t<\1>/ge| %s/typename std::enable_if<\(.*\)>::type/std14::enable_if_t<\1>/ge              
 
-" Set wrapping and fix movement keys!
-noremap <silent> <Leader>w :call ToggleWrap()<CR>
-function ToggleWrap()
-  if &wrap
-    echo "Wrap OFF"
-    setlocal nowrap
-    set virtualedit=all
-    silent! nunmap <buffer> k
-    silent! nunmap <buffer> j
-    silent! nunmap <buffer> 0
-    silent! nunmap <buffer> $
-  else
-    echo "Wrap ON"
-    setlocal wrap linebreak nolist
-    set virtualedit=
-    setlocal display+=lastline
-    noremap  <buffer> <silent> k   gk
-    noremap  <buffer> <silent> j   gj
-    noremap  <buffer> <silent> 0   g0
-    noremap  <buffer> <silent> $   g$
-  endif
-endfunction
+
+let g:clang_rename_path = '/usr/local/Cellar/llvm/3.9.1/bin/clang-rename'
+noremap <leader>cr :pyf /Users/parcolle/CLANG/llvm/tools/clang/tools/extra/clang-rename/tool/clang-rename.py<cr>
+

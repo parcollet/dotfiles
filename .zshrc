@@ -1,15 +1,13 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM=tmux
+export ZSH=/Users/parcolle/.oh-my-zsh
 
-setopt extendedglob
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="mytheme"
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -57,8 +55,7 @@ plugins=(git)
 
 # User configuration
 
-  #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-# export MANPATH="/usr/local/man:$MANPATH"
+# export MANPATH="/usr/local/man:$MANPATH
 
 source $ZSH/oh-my-zsh.sh
 
@@ -76,7 +73,7 @@ source $ZSH/oh-my-zsh.sh
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -86,41 +83,88 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# ------------------ OWN CONFIG
 #
+#
+export  VIRTUAL_ENV_DISABLE_PROMPT=1
+#source $HOME/.mypython/bin/activate
+#
+export PROMPT='Mac:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
 
-# black -> 	palette 0
-# red -> 	plaette 1
-# green -> 	plaette 2
-# yellow -> 	plaette 3
-# blue -> 	plaette 4
-# magenta -> 	plaette 5
-# cyan -> 	plaette 6
-# white -> 	plaette 7
+export PATH=/usr/local/bin/:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
+#source $HOME/.mypython/bin/activate
 
-#prompt bart 						# see more prompts with 'prompt -p'
-#PROMPT="%{$fg[green]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg[yellow]%}%~ %{$reset_color%}%% "
+cmake_invoke () {
+  cmake ~/src/$1 -DTRIQS_PATH=$PWD/../triqs/INSTALL_DIR -Wno-dev
+}
 
-setopt HIST_IGNORE_DUPS					# ignore duplicate lines in history
+export LANG=fr_FR.UTF-8
+export LC_ALL=fr_FR.UTF-8
 
-# --- use ~/.dircolor file
-if which dircolors > /dev/null; then			# only std stream send to null
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b )"
-	alias ls='ls --color=auto -F'
-	alias grep='grep --color=auto'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-fi
+alias return_code="echo $?"
+alias dm8='make -j8 2>&1|less -R'
+alias dmake='make 2>&1 | sed -e "s/triqs::gfs:://g" | sed -e "s/triqs::clef:://g" |sed -e "s/triqs:://g" |less -R'
+alias grep='grep --color=auto'
+alias l='ls -l'
+alias la='ls -Al'
+alias lk='ls -lSr'
+alias ll='ls -l'
+alias lm='ls -al |more'
+alias lr='ls -lR'
+alias ls='ls -hFG '
+alias lt='ls -ltr'
+alias lx='ls -lXB'
+alias m8='make -j8'
+alias m8test='make -j8 && make test'
+alias m8docinstall='make -j8 && make -j8 install 2>&1 >/dev/null'
+alias maek='make'
+alias mroe='more'
+alias print_code='enscript -G -f Courier7 -Pko '
+alias print_code_CPP='enscript -G -f Courier7  --color -Ecpp -o ~/code.ps '
+alias print_code_PY='enscript -G -f Courier7  --color -Epython -o ~/code.ps '
+alias rm='rm -f'
+alias voirCPP='find . -name "*.?pp" |xargs grep -nH '
+alias voirHPP='find . -name "*.hpp" |xargs grep -nH '
+alias voirMake='find . -name "*.cmake" -or -name "CMakeLists.txt" |xargs grep -nH '
+alias voirPY='find . -name "*.py" -or -name "*.pxd" -or -name "*.pyx" |xargs grep -nH '
+alias voirRST='find . -name "*.rst" |xargs grep -nH '
+alias mvim='mvim -p'
+alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
+alias gcc10="export DYLD_LIBRARY_PATH=/Users/parcolle/gcc410concepts/lib"
 
-zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}" # use dircolors for autocomplete
-autoload -Uz compinit && compinit			# enable autocomplete
-#autoload -U colors && colors				# enable coloring
-#autoload -U promptinit && promptinit 			# enable extended prompt
+alias clang-format="/opt/llvm/bin/clang-format"
+#alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"
 
-if [ -f ~/.shrc ]; then
-    . ~/.shrc
-fi
+alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
-setxkbmap -option "ctrl:nocaps"
-#xbindkeys -p
+
+# temp
+#alias cmake="/Applications/CMake.app/Contents/bin/cmake"
+alias ccmake="/Applications/CMake.app/Contents/bin/ccmake"
+##export HDF5_DEBUG="all"
+
+export PATH=$PATH:/usr/local/Cellar/llvm/3.9.1/bin
+
+export HOMEBREW_GITHUB_API_TOKEN=""
+
+export LIBCLANG_LOCATION="/usr/local/lib/libclang.dylib"
+export LIBCLANG_CXX_ADDITIONAL_FLAGS=" -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/include -I/usr/include -I/System/Library/Frameworks -I/Library/Frameworks"
+
+
+# added by Miniconda2 4.0.5 installer
+#export PATH="/Users/parcolle/miniconda2/bin:$PATH"
+#
+#Do NOT share history
+unsetopt share_history
+#
+#
+tagsrc () {
+   list=()
+   file_endings=(c cpp h hpp)
+   for j in ${file_endings[@]}; do
+      for i in $@; do
+         list+=($i/**/*.$j(N))
+      done
+   done
+   ctags ${list[@]}
+}
+
