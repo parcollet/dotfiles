@@ -41,9 +41,11 @@ fi
 export TMPDIR=/tmp
 export CTEST_OUTPUT_ON_FAILURE=1
 
-source /Users/parcolle/triqs_install/share/cpp2pyvars.sh 
-source /Users/parcolle/triqs_install/share/triqsvars.sh 
-
-addlib /usr/local
 addpath /usr/local/opt/llvm
+
+export PYTHONPATH=/usr/local/Cellar/llvm/8.0.0/lib/python2.7/site-packages/:$PYTHONPATH
+export SDKROOT=$(xcrun --show-sdk-path)
+
+export ASAN_OPTIONS=symbolize=1:detect_leaks=0
+export UBSAN_OPTIONS=symbolize=1:print_stacktrace=1:halt_on_error=1
 

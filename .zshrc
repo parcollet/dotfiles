@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/parcolle/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -97,8 +97,8 @@ cmake_invoke () {
   cmake ~/src/$1 -DTRIQS_PATH=$PWD/../triqs/INSTALL_DIR -Wno-dev
 }
 
-export LANG=fr_FR.UTF-8
-export LC_ALL=fr_FR.UTF-8
+#export LANG=fr_FR.UTF-8
+#export LC_ALL=fr_FR.UTF-8
 
 alias return_code="echo $?"
 alias dm8='make -j8 2>&1|less -R'
@@ -119,8 +119,8 @@ alias m8docinstall='make -j8 && make -j8 install 2>&1 >/dev/null'
 alias maek='make'
 alias mroe='more'
 alias print_code='enscript -G -f Courier7 -Pko '
-alias print_code_CPP='enscript -G -f Courier7  --color -Ecpp -o ~/code.ps '
-alias print_code_PY='enscript -G -f Courier7  --color -Epython -o ~/code.ps '
+alias print_code_CPP='enscript -G -f Courier7  --color -Ecpp -L 90 -C '
+alias print_code_PY='enscript -G -f Courier7  --color -Epython -L 90 -C '
 alias rm='rm -f'
 alias voirCPP='find . -name "*.?pp" |xargs grep -nH '
 alias voirHPP='find . -name "*.hpp" |xargs grep -nH '
@@ -129,7 +129,6 @@ alias voirPY='find . -name "*.py" -or -name "*.pxd" -or -name "*.pyx" |xargs gre
 alias voirRST='find . -name "*.rst" |xargs grep -nH '
 alias mvim='mvim -p'
 alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
-alias gcc10="export DYLD_LIBRARY_PATH=/Users/parcolle/gcc410concepts/lib"
 
 #alias clang-format="/opt/llvm/bin/clang-format"
 #alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"
@@ -146,20 +145,17 @@ alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance
 
 export HOMEBREW_GITHUB_API_TOKEN=""
 
-export LIBCLANG_LOCATION="/usr/local/lib/libclang.dylib"
-export LIBCLANG_CXX_ADDITIONAL_FLAGS=" -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/include -I/usr/include -I/System/Library/Frameworks -I/Library/Frameworks"
+#export LIBCLANG_LOCATION="/usr/local/lib/libclang.dylib"
+#export LIBCLANG_CXX_ADDITIONAL_FLAGS=" -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/include -I/usr/include -I/System/Library/Frameworks -I/Library/Frameworks"
 
 export TMPDIR=/tmp
 export CTEST_OUTPUT_ON_FAILURE=1
 
-source /Users/parcolle/triqs_install/share/cpp2pyvars.sh 
-source /Users/parcolle/triqs_install/share/triqsvars.sh 
-export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+source /Users/oparcollet/triqs_install/share/cpp2pyvars.sh
+source /Users/oparcollet/triqs_install/share/triqsvars.sh
+export LIBRARY_PATH=/usr/local/opt/llvm/lib:$LIBRARY_PATH
+export CPLUS_INCLUDE_PATH=/usr/local/include:/Users/oparcollet/triqs_install/include:$CPLUS_INCLUDE_PATH
 
-
-# added by Miniconda2 4.0.5 installer
-#export PATH="/Users/parcolle/miniconda2/bin:$PATH"
-#
 #Do NOT share history
 unsetopt share_history
 #
