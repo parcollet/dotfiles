@@ -1,0 +1,13 @@
+*.log
+*.dvi
+*.aux
+*.toc
+*.pyc
+
+*.swp
+.*.swp
+*.swo
+a.out
+.clang_complete
+.DS_Store
+

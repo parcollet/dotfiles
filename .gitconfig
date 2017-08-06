@@ -1,28 +1,26 @@
-;--------------------------------------------------------------------------------
-; 	My Git config file	\O/		
-;
-;--------------------------------------------------------------------------------
-
-
-
-[user]
-	name = Nils Wentzell
-	email = nils.wentzell@gmail.com
-[merge]
-	tool = vimdiff
-[core]
-	editor = vim
-	excludesfile = ~/.glob_git_ignore
-[push]
-	default = current
-[pull]
-	default = current
-[diff]
-	submodule = log
-	tool = vimdiff
-[difftool]
-	prompt = false
 [alias]
-	d = difftool
-	l = log --graph --abbrev-commit --decorate --format=format:'%C(blue)%h%C(reset) - %C(cyan)%aD%C(reset) %C(green)(%ar)%C(reset)%C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
+	st = status
+	ci = commit -a
+	br = branch
+	co = checkout
+	clogaa = log --graph --full-history --all --color         --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\"
+        cloga = log --graph --full-history --branches='[^_]*' --color         --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\"
+ 	clog = log --graph --full-history  --color         --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\"
+	dfw = diff --ignore-space-change
+
+[color]
+	ui = always
+[user]
+	name = Olivier Parcollet
+	email = olivier.parcollet@cea.fr
+[push]
+	default = tracking
+[core]
+ 	excludesfile = /Users/parcolle/.gitignore_global
+	editor = /usr/bin/vim
+[merge]
+        defaultToUpstream = true
+
+[diff "nodiff"]
+         command = `which true`
+
