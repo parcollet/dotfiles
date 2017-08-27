@@ -210,3 +210,26 @@ command! Repl14Type %s/typename std::remove_reference<\(.*\)>::type/std14::remov
 let g:clang_rename_path = '/usr/local/Cellar/llvm/3.9.1/bin/clang-rename'
 noremap <leader>cr :pyf /Users/parcolle/CLANG/llvm/tools/clang/tools/extra/clang-rename/tool/clang-rename.py<cr>
 
+
+" Fold Copyright in Python
+function! CreateCopyrightFold(com)
+    let InCopyright = 0
+    set foldmethod=manual
+    for Line in range(1,line('$'))
+        let LineContents = getline(Line)
+        if LineContents !~ a:com 
+            if InCopyright
+                let CopyrightEnd = Line - 1
+                exe CopyrightStart . ',' . CopyrightEnd . 'fold'
+            endif
+            break
+        elseif LineContents =~ "Copyright"
+            let InCopyright = 1
+            let CopyrightStart = 0 " Line
+        endif
+    endfor
+endfunction
+
+au BufRead *.py call CreateCopyrightFold('^#')
+au BufRead *.cpp call CreateCopyrightFold('^\s*/*\*')
+au BufRead *.hpp call CreateCopyrightFold('^\s*/*\*')
