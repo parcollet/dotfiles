@@ -139,10 +139,12 @@ alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance
 
 # temp
 #alias cmake="/Applications/CMake.app/Contents/bin/cmake"
-alias ccmake="/Applications/CMake.app/Contents/bin/ccmake"
+#alias ccmake="/Applications/CMake.app/Contents/bin/ccmake"
 ##export HDF5_DEBUG="all"
 
 export PATH=$PATH:/usr/local/Cellar/llvm/3.9.1/bin
+export CMAKE_PREFIX_PATH=/Users/parcolle/cmake_test_export/cmake
+export CMAKE_MODULE_PATH=/Users/parcolle/cmake_test_export/cmake
 
 export HOMEBREW_GITHUB_API_TOKEN=""
 

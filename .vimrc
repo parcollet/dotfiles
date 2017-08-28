@@ -141,7 +141,8 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 nnoremap == :ClangFormat<cr>
 vnoremap == :ClangFormat<cr>
 " Specify command in shell
-let g:clang_format#command = '/opt/llvm/bin/clang-format'
+let g:clang_format#command = '/usr/local/bin/clang-format'
+"let g:clang_format#command = '/opt/llvm/bin/clang-format'
 " Detect and apply style-file .clang-format or _clang-format
 let g:clang_format#detect_style_file = 1
 
