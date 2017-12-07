@@ -6,6 +6,7 @@
 
 *.swp
 .*.swp
+.*.sw?
 *.swo
 a.out
 .clang_complete

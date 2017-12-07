@@ -30,10 +30,20 @@ addenv () {
 }
 
 export VISUAL=vim
-export CC=/usr/bin/clang
-export CXX=/usr/bin/clang++
-export CXXFLAGS=-Wno-c++1z-extensions
+export CC=clang
+export CXX=clang++
+#export CXXFLAGS=-Wno-c++1z-extensions
 
 if ! echo $PATH | egrep -q "(^|:)$HOME/bin($|:)" ; then
   export PATH=$HOME/bin:$PATH
 fi
+
+export TMPDIR=/tmp
+export CTEST_OUTPUT_ON_FAILURE=1
+
+source /Users/parcolle/triqs_install/share/cpp2pyvars.sh 
+source /Users/parcolle/triqs_install/share/triqsvars.sh 
+
+addlib /usr/local
+addpath /usr/local/opt/llvm
+

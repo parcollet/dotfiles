@@ -131,7 +131,7 @@ alias mvim='mvim -p'
 alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
 alias gcc10="export DYLD_LIBRARY_PATH=/Users/parcolle/gcc410concepts/lib"
 
-alias clang-format="/opt/llvm/bin/clang-format"
+#alias clang-format="/opt/llvm/bin/clang-format"
 #alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"
 
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
@@ -142,14 +142,19 @@ alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance
 #alias ccmake="/Applications/CMake.app/Contents/bin/ccmake"
 ##export HDF5_DEBUG="all"
 
-export PATH=$PATH:/usr/local/Cellar/llvm/3.9.1/bin
-export CMAKE_PREFIX_PATH=/Users/parcolle/cmake_test_export/cmake
-export CMAKE_MODULE_PATH=/Users/parcolle/cmake_test_export/cmake
+#export PATH=$PATH:/usr/local/Cellar/llvm/3.9.1/bin
 
 export HOMEBREW_GITHUB_API_TOKEN=""
 
 export LIBCLANG_LOCATION="/usr/local/lib/libclang.dylib"
 export LIBCLANG_CXX_ADDITIONAL_FLAGS=" -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/include -I/usr/include -I/System/Library/Frameworks -I/Library/Frameworks"
+
+export TMPDIR=/tmp
+export CTEST_OUTPUT_ON_FAILURE=1
+
+source /Users/parcolle/triqs_install/share/cpp2pyvars.sh 
+source /Users/parcolle/triqs_install/share/triqsvars.sh 
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 
 
 # added by Miniconda2 4.0.5 installer
