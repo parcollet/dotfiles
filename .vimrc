@@ -234,3 +234,9 @@ endfunction
 au BufRead *.py call CreateCopyrightFold('^#')
 au BufRead *.cpp call CreateCopyrightFold('^\s*/*\*')
 au BufRead *.hpp call CreateCopyrightFold('^\s*/*\*')
+
+" remove trailing spaces
+"
+autocmd BufWritePre * %s/\s\+$//e
+
+
