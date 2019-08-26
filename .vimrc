@@ -55,7 +55,7 @@ set number 			" Show line numbers
 autocmd BufReadPost quickfix AnsiEsc
 "set makeprg=$HOME/bin/pymake
 set makeprg=make
-:command! -nargs=* Make :make -j 60 <args> | cwindow 15
+:command! -nargs=* Make :make -j 60 <args> | cwindow 20
 "}}}
 "-------------------------------------- Key Mappings ------------------------------------------{{{
 
@@ -140,19 +140,13 @@ set wildmenu
 inoremap <C-n> <C-x><C-o>
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hoverPreview = 'auto'
-let g:LanguageClient_diagnosticsEnable = 1
+let g:LanguageClient_diagnosticsEnable = 0
 "}}}
 
 "autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax 	" Enable Syntax folding
 "autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR			" Start unfolded
 
 "-------------------------------------- CPP SPECIFIC STUFF ------------------------------------------
-
-" --- Config for clang-format plugin
-nnoremap == :ClangFormat<cr>
-vnoremap == :ClangFormat<cr>
-" Specify command in shell
-let g:clang_format#command = '/usr/local/opt/llvm/bin/clang-format'
 
 " Detect and apply style-file .clang-format or _clang-format
 let g:clang_format#detect_style_file = 1
@@ -200,7 +194,6 @@ set sw=1
 set fo-=t "disable autowrap
 set tabstop=8
 set enc=utf-8
-set autochdir
 
 " my commands
 command! CleanConstRef %s/const\s*\([^\&]\+\)\s*&\s*\(\<\w*\>\)\s*/\1 const \&\2/gc
