@@ -1,9 +1,9 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/parcollet/oh-my-zsh
-[submodule ".vim/bundle/Vundle.vim"]
-	path = .vim/bundle/Vundle.vim
-	url = https://github.com/VundleVim/Vundle.vim
 [submodule ".jupyter/nbextensions/vim_binding"]
 	path = .jupyter/nbextensions/vim_binding
 	url = https://github.com/lambdalisue/jupyter-vim-binding
+[submodule ".vim/.vim/autoload/vim-plug"]
+	path = .vim/.vim/autoload/vim-plug
+	url = git@github.com:junegunn/vim-plug.git

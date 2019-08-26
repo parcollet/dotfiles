@@ -3,40 +3,38 @@
 "								"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"-------------------------------------- Load plugins ------------------------------------------
+"-------------------------------------- Load plugins ------------------------------------------{{{
 
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()"
+call plug#begin()
 
-" Let Vundle manage itself
-Plugin 'VundleVim/Vundle.vim'
+Plug 'vim-scripts/GrepCommands'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'Latex-Box-Team/Latex-Box'
+Plug 'scrooloose/nerdcommenter'
+Plug 'chrisbra/Recover.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+"Plug 'altercation/vim-colors-solarized'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'vim-scripts/AnsiEsc.vim'
+Plug 'tpope/vim-fugitive'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
-" Load Plugins ( from github.com )
-Plugin 'vim-scripts/GrepCommands'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'Latex-Box-Team/Latex-Box'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'chrisbra/Recover.vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'vim-scripts/AnsiEsc.vim'
-Plugin 'jceb/vim-editqf'
-
-
-call vundle#end()
-
-"-------------------------------------- GENERAL SETTINGS ------------------------------------------
+call plug#end()
+"}}}
+"-------------------------------------- General Settings ------------------------------------------{{{
 
 syntax on			" Syntax highlighting on
 filetype plugin indent on	" Indenting globally on
-set shiftwidth=4		" Set indent shift
+set shiftwidth=2		" Set indent shift
+set backspace=2			" Make backspace work normally
+set nomore			" Do not prompt for 'more'
 
-set wildmenu			" Always use auto-complete menu
 
 " My Status Line
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
@@ -47,29 +45,19 @@ set number 			" Show line numbers
 "-------------------------------------- CUSTOM COMMANDS ------------------------------------------
 
 " Insert templates
-":command! Tcpp		:r ~/.vim/templates/templ.cpp
-":command! Tmain		:r ~/.vim/templates/main.cpp
-":command! Tclass	:r ~/.vim/templates/class.cpp
-":command! Th		:r ~/.vim/templates/templ.h
-":command! Ttex		:r ~/.vim/templates/templ.tex
+:command! Ttest		:r ~/.vim/templates/test.cpp
+:command! TtestF	:r ~/.vim/templates/test_F.cpp
+:command! Tpytest	:r ~/.vim/templates/test.py
+:command! TCMake	:r ~/.vim/templates/CMakeLists.txt
+:command! Ttex		:r ~/.vim/templates/templ.tex
 
 "Command Make will call make and then open quickfix window
-:command! -nargs=* Make :make -j 8 <args> |cwindow
-:au BufReadPost quickfix AnsiEsc
-set makeprg=~/.vim/make.bash
-
-function! QfRmTriqs()
-  let qflist = getqflist()
-  for i in qflist
-     let i.text = substitute(i.text, "triqs::",  "", "g")
-  endfor
-  call setqflist(qflist)
-endfunction
-
-":command! RmTriqs call QfRmTriqs()
-"au QuickfixCmdPost make call QfRmTriqs() |AnsiEsc| cn
-
-"-------------------------------------- KEY MAPPINGS ------------------------------------------
+autocmd BufReadPost quickfix AnsiEsc
+"set makeprg=$HOME/bin/pymake
+set makeprg=make
+:command! -nargs=* Make :make -j 60 <args> | cwindow 15
+"}}}
+"-------------------------------------- Key Mappings ------------------------------------------{{{
 
 " rebind leader key and escape
 let mapleader = ","
@@ -108,9 +96,10 @@ nmap <Leader>Ctl 	:CommTLine<cr>
 "inoremap {}     {}
 
 "Just press F5 to make your program:
-map <F5> :Make all<cr><cr><cr>
-map 'll :Make -C ~/B/triqs<cr><cr><cr>
-"leader n for next error
+map <F5> :Make run<cr><cr><cr>
+autocmd Syntax c,cpp map <buffer> 'll :Make -s -C build<cr><cr><cr>
+
+";n for next error
 nnoremap ;n	:cn<cr>
 nnoremap ;p	:cp<cr>
 
@@ -131,6 +120,28 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 
 "-------------------------------------- FOLDING  ------------------------------------------
+"-------------------------------------- General Coding Config ------------------------------------------{{{
+"
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'cpp': ['clangd'],
+    \ }
+
+" --- Language Server Bindings
+autocmd Syntax c,cpp,python nnoremap <buffer> <C-]> :call LanguageClient#textDocument_definition()<CR>
+autocmd Syntax c,cpp,python vnoremap <buffer> <C-]> :call LanguageClient#textDocument_definition()<CR>
+autocmd Syntax c,cpp,python nnoremap <buffer> <C-h> :call LanguageClient#textDocument_rename()<CR>
+autocmd Syntax c,cpp,python vnoremap <buffer> <C-h> :call LanguageClient#textDocument_rename()<CR>
+
+" --- Code Completion
+set omnifunc=syntaxcomplete#Complete
+set completefunc=LanguageClient#complete
+set wildmenu
+inoremap <C-n> <C-x><C-o>
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_hoverPreview = 'auto'
+let g:LanguageClient_diagnosticsEnable = 1
+"}}}
 
 "autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax 	" Enable Syntax folding
 "autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR			" Start unfolded
