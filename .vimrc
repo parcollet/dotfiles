@@ -97,7 +97,7 @@ nmap <Leader>Ctl 	:CommTLine<cr>
 
 "Just press F5 to make your program:
 map <F5> :Make run<cr><cr><cr>
-autocmd Syntax c,cpp map <buffer> 'll <Esc>:w<CR>:Make -s -C build/test/c++<cr><cr><cr>
+autocmd Syntax c,cpp map <buffer> 'll <Esc>:w<CR>:Make -s -C $VIM_BUILD_DIR<cr><cr><cr>
 
 ";n for next error
 nnoremap ;n	:cn<cr>
