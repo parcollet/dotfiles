@@ -43,7 +43,7 @@ export CTEST_OUTPUT_ON_FAILURE=1
 
 addpath /usr/local/opt/llvm
 
-export PYTHONPATH=/usr/local/Cellar/llvm/8.0.0/lib/python2.7/site-packages/:$PYTHONPATH
+export PYTHONPATH=/usr/local/Cellar/llvm/8.0.1/lib/python2.7/site-packages/:$PYTHONPATH
 export SDKROOT=$(xcrun --show-sdk-path)
 
 export ASAN_OPTIONS=symbolize=1:detect_leaks=0

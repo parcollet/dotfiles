@@ -7,17 +7,17 @@
 
 call plug#begin()
 
-Plug 'vim-scripts/GrepCommands'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/GrepCommands'
 Plug 'Latex-Box-Team/Latex-Box'
 Plug 'scrooloose/nerdcommenter'
 Plug 'chrisbra/Recover.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 "Plug 'altercation/vim-colors-solarized'
 Plug 'derekwyatt/vim-fswitch'
-Plug 'vim-scripts/AnsiEsc.vim'
-Plug 'tpope/vim-fugitive'
+"Plug 'vim-scripts/AnsiEsc.vim'
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -52,10 +52,10 @@ set number 			" Show line numbers
 :command! Ttex		:r ~/.vim/templates/templ.tex
 
 "Command Make will call make and then open quickfix window
-autocmd BufReadPost quickfix AnsiEsc
+"autocmd BufReadPost quickfix AnsiEsc
 "set makeprg=$HOME/bin/pymake
 set makeprg=make
-:command! -nargs=* Make :make -j 60 <args> | cwindow 20
+:command! -nargs=* Make :make -j 8 <args> | cwindow 20
 "}}}
 "-------------------------------------- Key Mappings ------------------------------------------{{{
 
@@ -97,7 +97,7 @@ nmap <Leader>Ctl 	:CommTLine<cr>
 
 "Just press F5 to make your program:
 map <F5> :Make run<cr><cr><cr>
-autocmd Syntax c,cpp map <buffer> 'll :Make -s -C build<cr><cr><cr>
+autocmd Syntax c,cpp map <buffer> 'll <Esc>:w<CR>:Make -s -C build/test/c++<cr><cr><cr>
 
 ";n for next error
 nnoremap ;n	:cn<cr>
@@ -137,10 +137,18 @@ autocmd Syntax c,cpp,python vnoremap <buffer> <C-h> :call LanguageClient#textDoc
 set omnifunc=syntaxcomplete#Complete
 set completefunc=LanguageClient#complete
 set wildmenu
-inoremap <C-n> <C-x><C-o>
+"inoremap <C-n> <C-x><C-o>
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hoverPreview = 'auto'
-let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_diagnosticsEnable = 1
+"-------------------------------------- Cpp Specific Stuff ------------------------------------------{{{
+
+" --- Config for clang-format plugin
+autocmd Syntax c,cpp nnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>
+autocmd Syntax c,cpp vnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>
+
+" --- Enable highlighting of matching angle braces
+autocmd Syntax c,cpp set mps+=<:>
 "}}}
 
 "autocmd Syntax c,cpp,vim,xml,html,xhtml setlocal foldmethod=syntax 	" Enable Syntax folding

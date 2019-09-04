@@ -5,10 +5,9 @@ ab tyn typename
 ab typ typedef
 ab tem template
 ab nam namespace
-ab con const
-ab tri triqs 
+ab con const & 
 ab ope operator
-ab boo boost:
+
 
 map _s i struct  { };<ESC>2h
 map _c i class  { };<ESC>2h
@@ -20,4 +19,5 @@ map _wo astd::cout<< <<std::endl;<ESC>12hi
 map _we astd::cerr<< <<std::endl;<ESC>12hi
 map _sep o//<ESC>50a-<ESC>o<ESC>xxj^
 
-
+map same istd::is_same_v< , ><ESC>3hi
+nmap sass istatic_assert(, " ");<ESC>6hi

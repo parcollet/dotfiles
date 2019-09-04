@@ -129,6 +129,7 @@ alias voirPY='find . -name "*.py" -or -name "*.pxd" -or -name "*.pyx" |xargs gre
 alias voirRST='find . -name "*.rst" |xargs grep -nH '
 alias mvim='mvim -p'
 alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
+alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 #alias clang-format="/opt/llvm/bin/clang-format"
 #alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"
@@ -154,7 +155,9 @@ export CTEST_OUTPUT_ON_FAILURE=1
 source /Users/oparcollet/triqs_install/share/cpp2pyvars.sh
 source /Users/oparcollet/triqs_install/share/triqsvars.sh
 export LIBRARY_PATH=/usr/local/opt/llvm/lib:$LIBRARY_PATH
-export CPLUS_INCLUDE_PATH=/usr/local/include:/Users/oparcollet/triqs_install/include:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=/Users/oparcollet/triqs_install/include:$CPLUS_INCLUDE_PATH
+
+export CXXFLAGS="-march=native"
 
 #Do NOT share history
 unsetopt share_history
