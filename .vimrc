@@ -140,7 +140,7 @@ set wildmenu
 "inoremap <C-n> <C-x><C-o>
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hoverPreview = 'auto'
-let g:LanguageClient_diagnosticsEnable = 1
+let g:LanguageClient_diagnosticsEnable = 0
 "-------------------------------------- Cpp Specific Stuff ------------------------------------------{{{
 
 " --- Config for clang-format plugin

@@ -19,5 +19,6 @@ map _wo astd::cout<< <<std::endl;<ESC>12hi
 map _we astd::cerr<< <<std::endl;<ESC>12hi
 map _sep o//<ESC>50a-<ESC>o<ESC>xxj^
 
+map dec istd::decay_t< , ><ESC>3hi
 map same istd::is_same_v< , ><ESC>3hi
 nmap sass istatic_assert(, " ");<ESC>6hi
