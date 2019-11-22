@@ -23,4 +23,5 @@
 
 [diff "nodiff"]
          command = `which true`
-
+[init]
+	templatedir = ~/.git_template
