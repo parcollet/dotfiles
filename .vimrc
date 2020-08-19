@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  My .VIMRC 	\O/						" 
+"  My .VIMRC 	\O/						"
 "								"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -39,10 +39,10 @@ set shiftwidth=4		" Set indent shift
 set wildmenu			" Always use auto-complete menu
 
 " My Status Line
-set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P	
-set laststatus=2		" Always display status bar		
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+set laststatus=2		" Always display status bar
 set hidden			" Can hide changed buffers!
-set number 			" Show line numbers 
+set number 			" Show line numbers
 
 "-------------------------------------- CUSTOM COMMANDS ------------------------------------------
 
@@ -71,7 +71,7 @@ endfunction
 
 "-------------------------------------- KEY MAPPINGS ------------------------------------------
 
-" rebind leader key and escape 
+" rebind leader key and escape
 let mapleader = ","
 "inoremap ;; <Esc>
 "vnoremap ;; <Esc>
@@ -111,8 +111,8 @@ nmap <Leader>Ctl 	:CommTLine<cr>
 map <F5> :Make all<cr><cr><cr>
 map 'll :Make -C ~/B/triqs<cr><cr><cr>
 "leader n for next error
-nnoremap ;n	:cn<cr> 
-nnoremap ;p	:cp<cr> 
+nnoremap ;n	:cn<cr>
+nnoremap ;p	:cp<cr>
 
 " create and goto file under cursor
 map <leader>gf :e <cfile><cr>
@@ -141,7 +141,8 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 nnoremap == :ClangFormat<cr>
 vnoremap == :ClangFormat<cr>
 " Specify command in shell
-let g:clang_format#command = '/usr/local/bin/clang-format'
+let g:clang_format#command = '/cm/shared/sw/pkg/devel/llvm/7.0.1/bin/clang-format'
+"let g:clang_format#command = '/usr/local/bin/clang-format'
 "let g:clang_format#command = '/opt/llvm/bin/clang-format'
 " Detect and apply style-file .clang-format or _clang-format
 let g:clang_format#detect_style_file = 1
@@ -178,7 +179,7 @@ nmap <silent> <Leader>oj :FSBelow<cr>
 nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 let g:tex_flavor='latex'
-let g:Tex_ViewRule_pdf = 'Skim' 
+let g:Tex_ViewRule_pdf = 'Skim'
 
 set shellslash
 set grepprg=grep\ -nH\ $*
@@ -191,7 +192,7 @@ set tabstop=8
 set enc=utf-8
 set autochdir
 
-"let g:clang_format_path='/usr/local/opt/llvm/bin/clang-format' 
+"let g:clang_format_path='/usr/local/opt/llvm/bin/clang-format'
 "map <C-K> :pyf /Users/parcolle/clang34/clang-format.py<CR>
 "imap <C-K> <ESC>:pyf /Users/parcolle/clang34/clang-format.py<CR>i
 "map <C-K> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
@@ -203,9 +204,9 @@ command! CleanConstRef %s/const\s*\([^\&]\+\)\s*&\s*\(\<\w*\>\)\s*/\1 const \&\2
 command! ReplaceTypeByUsing %s/typedef\s*\(.*\)\s*\(\<\w*\>\)\s*;/using \2=\1;/gc
 command! ReplDecay %s/typename std::remove_const<typename std::remove_reference<\(.*\)>::type>::type/std14::decay_t<\1>/gc
 command! ReplDR %s/auto \(.*\)\_s*DECL_AND_RETURN(\(.*\));/decltype(auto) \1 { return \2;}/gc
-command! ReplRETURN %s/RETURN(\(.*\));\s*$/{ return \1;}/gc 
+command! ReplRETURN %s/RETURN(\(.*\));\s*$/{ return \1;}/gc
 
-command! Repl14Type %s/typename std::remove_reference<\(.*\)>::type/std14::remove_reference_t<\1>/ge | %s/typename std::result_of<\(.*\)>::type/std14::result_of_t<\1>/ge  | %s/typename std::remove_const<\(.*\)>::type/std14::remove_const_t<\1>/ge | %s/typename std::decay<\(.*\)>::type/std14::decay_t<\1>/ge| %s/typename std::enable_if<\(.*\)>::type/std14::enable_if_t<\1>/ge              
+command! Repl14Type %s/typename std::remove_reference<\(.*\)>::type/std14::remove_reference_t<\1>/ge | %s/typename std::result_of<\(.*\)>::type/std14::result_of_t<\1>/ge  | %s/typename std::remove_const<\(.*\)>::type/std14::remove_const_t<\1>/ge | %s/typename std::decay<\(.*\)>::type/std14::decay_t<\1>/ge| %s/typename std::enable_if<\(.*\)>::type/std14::enable_if_t<\1>/ge
 
 
 let g:clang_rename_path = '/usr/local/Cellar/llvm/3.9.1/bin/clang-rename'
@@ -218,7 +219,7 @@ function! CreateCopyrightFold(com)
     set foldmethod=manual
     for Line in range(1,line('$'))
         let LineContents = getline(Line)
-        if LineContents !~ a:com 
+        if LineContents !~ a:com
             if InCopyright
                 let CopyrightEnd = Line - 1
                 exe CopyrightStart . ',' . CopyrightEnd . 'fold'

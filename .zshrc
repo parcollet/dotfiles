@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/parcolle/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 export  VIRTUAL_ENV_DISABLE_PROMPT=1
 #source $HOME/.mypython/bin/activate
 #
-export PROMPT='Mac:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
+export PROMPT='PC:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
 
 export PATH=/usr/local/bin/:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
 #source $HOME/.mypython/bin/activate
@@ -97,8 +97,8 @@ cmake_invoke () {
   cmake ~/src/$1 -DTRIQS_PATH=$PWD/../triqs/INSTALL_DIR -Wno-dev
 }
 
-export LANG=fr_FR.UTF-8
-export LC_ALL=fr_FR.UTF-8
+#export LANG=fr_FR.UTF-8
+#export LC_ALL=fr_FR.UTF-8
 
 alias return_code="echo $?"
 alias dm8='make -j8 2>&1|less -R'
@@ -129,13 +129,27 @@ alias voirPY='find . -name "*.py" -or -name "*.pxd" -or -name "*.pyx" |xargs gre
 alias voirRST='find . -name "*.rst" |xargs grep -nH '
 alias mvim='mvim -p'
 alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
-alias gcc10="export DYLD_LIBRARY_PATH=/Users/parcolle/gcc410concepts/lib"
+alias gcc10="export DYLD_LIBRARY_PATH=$HOME/gcc410concepts/lib"
 
 #alias clang-format="/opt/llvm/bin/clang-format"
 #alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"
 
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
+prof() {
+  #CURRENT_DIR=$PWD; mkdir -p prof; cd prof;
+  rm -f $1.prof* &> /dev/null
+  LD_PRELOAD=$HOME/opt/gperftools/lib/libprofiler.so CPUPROFILE=$1.prof $@
+  #cd $CURRENT_DIR
+}
+pprint() {
+  pprof --text --lines $1 $1.prof > $1.prof.txt
+  head -n 20 $1.prof.txt
+  pprof --svg --lines $1 $1.prof > $1.prof.svg
+  chromium-browser $1.prof.svg &
+  #pprof --pdf --lines $1 $1.prof > $1.prof.pdf
+  #pprof --web --lines $1 $1.prof
+}
 
 # temp
 #alias cmake="/Applications/CMake.app/Contents/bin/cmake"
@@ -146,19 +160,17 @@ alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance
 
 export HOMEBREW_GITHUB_API_TOKEN=""
 
-export LIBCLANG_LOCATION="/usr/local/lib/libclang.dylib"
-export LIBCLANG_CXX_ADDITIONAL_FLAGS=" -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/Cellar/llvm/4.0.0/bin/../include/c++/v1 -I/usr/local/include -I/usr/include -I/System/Library/Frameworks -I/Library/Frameworks"
-
 export TMPDIR=/tmp
 export CTEST_OUTPUT_ON_FAILURE=1
 
-source /Users/parcolle/triqs_install/share/cpp2pyvars.sh 
-source /Users/parcolle/triqs_install/share/triqsvars.sh 
+source /home/oparcollet/triqs_install/share/cpp2pyvars.sh
+source /home/oparcollet/triqs_install/share/triqsvars.sh
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 
+export CXXFLAGS=" -march=native "
 
 # added by Miniconda2 4.0.5 installer
-#export PATH="/Users/parcolle/miniconda2/bin:$PATH"
+#export PATH="$HOME/miniconda2/bin:$PATH"
 #
 #Do NOT share history
 unsetopt share_history
@@ -174,4 +186,44 @@ tagsrc () {
    done
    ctags ${list[@]}
 }
+
+
+#module purge
+#module load gcc/7.4.0 gdb/8.2 cmake/3.9.0 openmpi/1.10.7-hfi lib/boost/1.68-gcc7-openmpi1 lib/fftw3/3.3.6-pl1-openmpi1 lib/hdf5/1.8.19 lib/NFFT/3.4.0 python2/2.7.13 llvm/7.0.1 slurm
+#module load nix
+#module load nix/nodejs nix/git nix/vim #Nix Modules
+
+export MODULE_EXPERT_MIXED_COMPILER=1
+module purge
+#module load gcc/7.4.0
+#module load llvm/8.0.1
+#module load python3/3.7.3
+#module load singularity/3.3.0
+#module load openmpi2/2.1.6-hfi lib/fftw3/3.3.8-openmpi2 lib/hdf5/1.8.21-openmpi2 python2/2.7.16 python2-mpi4py/2.7.16-openmpi2 lib/NFFT/3.4.0 lib/openblas/0.3.6 lib/boost/1.70-gcc7-openmpi2 cmake/3.14.5
+#module load slurm lib/eigen/3.3.5 gdb/8.2
+
+module load modules-nix
+module load nix/git nix/mupdf nix/feh
+
+module load slurm
+#module load gcc/10.1.0
+#module load llvm/9.0.0
+module load gcc/7.4.0 llvm/10.0.0
+module load lib/openblas/0.3.6 openmpi2/2.1.6-hfi lib/fftw3/3.3.8-openmpi2 lib/hdf5/1.8.21-openmpi2 lib/boost/1.70-gcc7-openmpi2 cmake/3.14.5 python3
+module load python3-mpi4py/3.7.3-openmpi2
+
+
+export NODE_DIR=$NODEJS_BASE
+unset LIBRARY_PATH  # This is still necessary if you want to compile with clang + cmake
+
+export PATH=$HOME/.local/bin:$PATH
+
+
+export ASAN_OPTIONS=symbolize=1:detect_leaks=0
+export ASAN_SYMBOLIZER_PATH=/cm/shared/sw/pkg/devel/llvm/8.0.1/bin/llvm-symbolizer
+export UBSAN_SYMBOLIZER_PATH=/cm/shared/sw/pkg/devel/llvm/8.0.1/bin/llvm-symbolizer
+export MSAN_SYMBOLIZER_PATH=/cm/shared/sw/pkg/devel/llvm/8.0.1/bin/llvm-symbolizer
+export TSAN_SYMBOLIZER_PATH=/cm/shared/sw/pkg/devel/llvm/7.0.1-omptsan/bin/llvm-symbolizer
+export TSAN_OPTIONS=symbolize=1
+
 
