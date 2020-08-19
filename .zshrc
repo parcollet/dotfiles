@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 export  VIRTUAL_ENV_DISABLE_PROMPT=1
 #source $HOME/.mypython/bin/activate
 #
-export PROMPT='PC:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
+export PROMPT='%m:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
 
 export PATH=/usr/local/bin/:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
 #source $HOME/.mypython/bin/activate
