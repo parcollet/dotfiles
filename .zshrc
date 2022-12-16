@@ -93,7 +93,11 @@ export PROMPT='Mac:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
 export PATH=/usr/local/bin/:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
 #source $HOME/.mypython/bin/activate
 
+export PATH=/Applications/Julia-1.6.app/Contents/Resources/julia/bin:$PATH
+export PATH=/Users/oparcollet/.julia/bin:$PATH
+
 cmake_invoke () {
+
   cmake ~/src/$1 -DTRIQS_PATH=$PWD/../triqs/INSTALL_DIR -Wno-dev
 }
 
@@ -129,7 +133,7 @@ alias voirPY='find . -name "*.py" -or -name "*.pxd" -or -name "*.pyx" |xargs gre
 alias voirRST='find . -name "*.rst" |xargs grep -nH '
 alias mvim='mvim -p'
 alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
-alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+#alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 #alias clang-format="/opt/llvm/bin/clang-format"
 #alias clang-format="/usr/local/Cellar/llvm/3.9.1/bin/clang-format"

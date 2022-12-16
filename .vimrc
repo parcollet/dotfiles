@@ -7,11 +7,13 @@
 
 call plug#begin()
 
+Plug 'lervag/vimtex'
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/GrepCommands'
-Plug 'Latex-Box-Team/Latex-Box'
+"Plug 'Latex-Box-Team/Latex-Box'
 Plug 'scrooloose/nerdcommenter'
 Plug 'chrisbra/Recover.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -25,8 +27,34 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'kdheepak/JuliaFormatter.vim'
+
+Plug 'cespare/vim-toml', { 'branch': 'main' }
+
 call plug#end()
 "}}}
+
+" This enables Vim's and neovim's syntax-related features. Without this, some
+" VimTeX features will not work (see ":help vimtex-requirements" for more
+" info).
+syntax enable
+
+" ---------------------------------- Latex ----------------------------------
+"
+let g:tex_flavor='latex' " Default tex file format
+let g:vimtex_view_method = 'skim' " Choose which program to use to view PDF file
+let g:vimtex_view_skim_sync = 1 " Value 1 allows forward search after every successful compilation
+let g:vimtex_view_skim_activate = 1 " Value 1 allows change focus to skim after command `:VimtexView` is given
+let g:vimtex_complete_enabled = 0 " no auto completoion . too slow
+
+"-------------------------------------- Julia------------------------------------------{{{
+
+let g:JuliaFormatter_options = {
+        \ 'indent'                    : 2,
+        \ 'margin'                    : 130,
+        \ }
+
 "-------------------------------------- General Settings ------------------------------------------{{{
 
 syntax on			" Syntax highlighting on
@@ -61,6 +89,8 @@ set makeprg=make
 
 " rebind leader key and escape
 let mapleader = ","
+let maplocalleader = ","
+
 "inoremap ;; <Esc>
 "vnoremap ;; <Esc>
 
@@ -118,6 +148,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 "-------------------------------------- FILE TYPE AUTOCOMMANDS ------------------------------------------
 
+au BufNewFile,BufRead [Dd]ockerfile,Dockerfile.*,*.Dockerfile set filetype=dockerfile
 
 "-------------------------------------- FOLDING  ------------------------------------------
 "-------------------------------------- General Coding Config ------------------------------------------{{{
@@ -144,8 +175,8 @@ let g:LanguageClient_diagnosticsEnable = 0
 "-------------------------------------- Cpp Specific Stuff ------------------------------------------{{{
 
 " --- Config for clang-format plugin
-autocmd Syntax c,cpp nnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>
-autocmd Syntax c,cpp vnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>
+autocmd Syntax c,cpp nnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>zz
+autocmd Syntax c,cpp vnoremap <buffer> == :call LanguageClient_textDocument_formatting()<CR>zz
 
 " --- Enable highlighting of matching angle braces
 autocmd Syntax c,cpp set mps+=<:>
@@ -242,4 +273,9 @@ au BufRead *.hpp call CreateCopyrightFold('^\s*/*\*')
 "
 " autocmd BufWritePre * %s/\s\+$//e
 
+" COLORS
+hi DiffAdd      ctermfg=NONE          ctermbg=LightGreen
+hi DiffChange   ctermfg=NONE          ctermbg=LightBlue
+hi DiffDelete   ctermfg=Red           ctermbg=LightBlue
+hi DiffText     ctermfg=Yellow        ctermbg=Red
 

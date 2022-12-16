@@ -8,6 +8,14 @@ ab nam namespace
 ab con const & 
 ab ope operator
 
+noremap <leader><leader>f ciw"<ESC>pa"_a=<ESC>p
+
+map FMT ciw"<ESC>pa"_a=<ESC>p
+map RAW iR"RAW()RAW"<ESC>4hi
+
+map BE yiwea.begin(),<ESC>pa.end()
+
+map AL i[](auto &&x){return ;}<ESC>2hi
 
 map _s i struct  { };<ESC>2h
 map _c i class  { };<ESC>2h
