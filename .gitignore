@@ -1,2 +1,7 @@
 *.bib.bak
 .vim/bundle/*
+.*.sw?
+code.vim
+.vscode
+.cache
+

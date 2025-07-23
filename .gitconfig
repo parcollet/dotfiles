@@ -12,16 +12,14 @@
 	ui = always
 [user]
 	name = Olivier Parcollet
-	email = olivier.parcollet@cea.fr
+	email = oparcollet@flatironinstitute.org
 [push]
 	default = tracking
 [core]
- 	excludesfile = /Users/parcolle/.gitignore_global
+ 	excludesfile = /Users/oparcollet/.gitignore
 	editor = /usr/bin/vim
 [merge]
         defaultToUpstream = true
 
 [diff "nodiff"]
          command = `which true`
-[init]
-	templatedir = ~/.git_template

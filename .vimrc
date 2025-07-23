@@ -22,15 +22,11 @@ Plug 'derekwyatt/vim-fswitch'
 "Plug 'vim-scripts/AnsiEsc.vim'
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'kdheepak/JuliaFormatter.vim'
 
 Plug 'cespare/vim-toml', { 'branch': 'main' }
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 call plug#end()
 "}}}
@@ -171,7 +167,7 @@ set wildmenu
 "inoremap <C-n> <C-x><C-o>
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_hoverPreview = 'auto'
-let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_diagnosticsEnable = 1
 "-------------------------------------- Cpp Specific Stuff ------------------------------------------{{{
 
 " --- Config for clang-format plugin

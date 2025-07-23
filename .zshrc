@@ -88,13 +88,14 @@ source $ZSH/oh-my-zsh.sh
 export  VIRTUAL_ENV_DISABLE_PROMPT=1
 #source $HOME/.mypython/bin/activate
 #
-export PROMPT='Mac:%{$fg[blue]%}%~%{$reset_color%} $(git_prompt_info)'
+export PROMPT='Mac:%{$fg[white]%}%~%{$reset_color%} $(git_prompt_info)'
 
-export PATH=/usr/local/bin/:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
+#export PATH=/usr/local/bin/:/OPT/HOMEBRew/opt/python@3.12/libexec/bin/:/opt/homebrew/opt/llvm/bin:$HOME/triqs/BUILD/triqs/INSTALL_DIR/bin:$PATH
 #source $HOME/.mypython/bin/activate
 
-export PATH=/Applications/Julia-1.6.app/Contents/Resources/julia/bin:$PATH
-export PATH=/Users/oparcollet/.julia/bin:$PATH
+#export PATH=/Applications/Julia-1.10.app/Contents/Resources/julia/bin:$PATH
+#export PATH=/Users/oparcollet/.julia/bin:$PATH
+export PATH=/opt/homebrew/bin:$PATH
 
 cmake_invoke () {
 
@@ -141,6 +142,9 @@ alias make_doc="make -j8 && make -j8 install 2>&1 >/dev/null"
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 
 
+#alias clang-tidy="clang-tidy   -load /Users/oparcollet/B/clair/src/plugins/clt1/libclt1.dylib"
+#
+
 # temp
 #alias cmake="/Applications/CMake.app/Contents/bin/cmake"
 #alias ccmake="/Applications/CMake.app/Contents/bin/ccmake"
@@ -156,12 +160,12 @@ export HOMEBREW_GITHUB_API_TOKEN=""
 export TMPDIR=/tmp
 export CTEST_OUTPUT_ON_FAILURE=1
 
-source /Users/oparcollet/triqs_install/share/cpp2pyvars.sh
-source /Users/oparcollet/triqs_install/share/triqsvars.sh
-export LIBRARY_PATH=/usr/local/opt/llvm/lib:$LIBRARY_PATH
-export CPLUS_INCLUDE_PATH=/Users/oparcollet/triqs_install/include:$CPLUS_INCLUDE_PATH
+#source /Users/oparcollet/triqs_install/share/cpp2pyvars.sh
+#source /Users/oparcollet/triqs_install/share/triqsvars.sh
+#export CPLUS_INCLUDE_PATH=/Users/oparcollet/triqs_install/include:$CPLUS_INCLUDE_PATH
 
 export CXXFLAGS="-march=native"
+#export LIBRARY_PATH=/usr/local/opt/llvm/lib:$LIBRARY_PATH
 
 #Do NOT share history
 unsetopt share_history
@@ -177,4 +181,20 @@ tagsrc () {
    done
    ctags ${list[@]}
 }
+
+#export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+#export PATH="/opt/homebrew/opt/sphinx-doc/bin:$PATH"
+
+#export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export DYLD_LIBRARY_PATH=/opt/homebrew/lib/:$DYLD_LIBRARY_PATH 
+
+alias python_san=$(realpath $(dirname $(realpath $(which python3)))/../Resources/Python.app/Contents/MacOS/Python)
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+export OMPI_MCA_btl_sm_backing_directory=/tmp
+
+export VCPKG_ROOT=$HOME/vcpkg
+export VCPKG_CMAKE_TOOLCHAIN=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake
+alias vcpkg="$HOME/vcpkg/vcpkg"
 
