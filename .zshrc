@@ -188,6 +188,7 @@ tagsrc () {
 #export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export DYLD_LIBRARY_PATH=/opt/homebrew/lib/:$DYLD_LIBRARY_PATH 
 
+export PATH=$HOME/.venv/my_python/bin/:$PATH
 alias python_san=$(realpath $(dirname $(realpath $(which python3)))/../Resources/Python.app/Contents/MacOS/Python)
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
